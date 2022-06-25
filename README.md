@@ -12,5 +12,7 @@ Los aprendices son:
 7. Evelin Manuela Bermeo Caldeŕon
 8. Karen Dayana Salamanca Ortega
 
-Nota Importante: En la carpeta de public/ayuda encontraras los manuales y videos de guia para el uso de la aplicacion.
+Nota Importante:
+- En la carpeta de public/ayuda encontraras los manuales y videos de guia para el uso de la aplicacion.
+- Para descargar la carpeta "node_modules" se debe ejecutar en la terminal de node en la carpeta del proyecto el comando "npm i"
 
