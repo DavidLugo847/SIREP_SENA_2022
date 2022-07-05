@@ -271,11 +271,7 @@ label {
 }
 #select-entregado{
     grid-area: select;
-    background: white;
-    width: 200px;
-    height: 30px;
     color: rgb(0, 0, 0);
-    margin-top: 10px;
     font-size: 1em;
     border: 2px rgb(101, 101, 101) solid;
     border-radius: 5px;
