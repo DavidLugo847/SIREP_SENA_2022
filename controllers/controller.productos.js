@@ -43,10 +43,11 @@ controlador.RegistrarProductos = async(req, res) => {
         let horaend = req.body.horafin;
         let inventario = req.body.inventario;
         let estado = req.body.Estadopdto;
-        let medida = req.body.medidaProd;
-        let tEmpaque = req.body.tipoEmpaque;
-        let sql = `insert into productos(Nombre,Descripcion,imagen,Estado,Reserva,MaxReserva,Tipo,fk_codigo_up,hora_inicio,hora_fin,inventario,medidas,tipoempaque) 
-            values('${nombre}','${Descripcion}','${imagen}','${estado}','${Reserva}','${Maximo}','${tipo}','${up}','${horastart}','${horaend}','${inventario}','${medida}','${tEmpaque}')`;
+        let medida = req.body.medida;
+        let promocion = req.body.promocion;
+        let porcentaje = req.body.porcentaje;
+        let sql = `insert into productos(Nombre,Descripcion,imagen,Estado,Reserva,MaxReserva,Tipo,fk_codigo_up,hora_inicio,hora_fin,inventario,medidas, promocion, porcentaje) 
+            values('${nombre}','${Descripcion}','${imagen}','${estado}','${Reserva}','${Maximo}','${tipo}','${up}','${horastart}','${horaend}','${inventario}','${medida}','${promocion}','${porcentaje}')`;
 
         await query(sql);
         return res.json({
@@ -63,7 +64,7 @@ controlador.RegistrarProductos = async(req, res) => {
 controlador.ListaProductos = async(req, res) => {
     try {
         var sql =
-            "select p.Codigo_pdto as Codigo_pdto, p.Nombre as Nombre_pdto, p.imagen as Imgpdto, up.nombre as Nombre_up, p.Descripcion as Descripcion, p.Estado as Estado, p.Reserva as Reserva, p.MaxReserva as MaxReserva, p.tipo as tipo, p.medidas as medidas, p.tipoempaque as tipoempaque, if( p.hora_inicio is null,'00::00:00',p.hora_inicio) as hora_inicio, if( p.hora_fin is null,'00:00:00',p.hora_fin) as hora_fin, if(p.inventario is null,'No',p.inventario) as inventario from productos p join unidades_productivas up on codigo_up = fk_codigo_up order by Codigo_pdto asc";
+            "select p.Codigo_pdto as Codigo_pdto, p.Nombre as Nombre_pdto, p.imagen as Imgpdto, up.nombre as Nombre_up, p.Descripcion as Descripcion, p.Estado as Estado, p.Reserva as Reserva, p.MaxReserva as MaxReserva, p.tipo as tipo, p.medidas as medidas, p.promocion as promocion, p.porcentaje as porcentaje, if( p.hora_inicio is null,'00::00:00',p.hora_inicio) as hora_inicio, if( p.hora_fin is null,'00:00:00',p.hora_fin) as hora_fin, if(p.inventario is null,'No',p.inventario) as inventario from productos p join unidades_productivas up on codigo_up = fk_codigo_up order by Codigo_pdto asc";
         let rows = await query(sql);
         res.json(rows);
     } catch (e) {
@@ -75,7 +76,7 @@ controlador.buscarpdto = async(req, res) => {
     try {
         var identificador = req.body.Identificacion;
         let sql =
-            "select p.Codigo_pdto as Codigo_pdto, p.Nombre as Nombre, p.Descripcion as Descripcion, p.Estado as Estado, p.Reserva as Reserva, p.MaxReserva as MaxReserva, p.fk_codigo_up as fk_codigo_up, p.tipo as tipo, p.medidas as medidas, p.tipoempaque as tipoempaque, p.hora_inicio as hora_inicio, p.hora_fin as hora_fin, p.inventario as inventario from productos p  where Codigo_pdto=" +
+            "select p.Codigo_pdto as Codigo_pdto, p.Nombre as Nombre, p.Descripcion as Descripcion, p.Estado as Estado, p.Reserva as Reserva, p.MaxReserva as MaxReserva, p.fk_codigo_up as fk_codigo_up, p.tipo as tipo, p.medidas as medidas,p.hora_inicio as hora_inicio, p.hora_fin as hora_fin, p.inventario as inventario from productos p  where Codigo_pdto=" +
             identificador;
         let rows = await query(sql);
         res.json(rows);
@@ -99,7 +100,8 @@ controlador.Actualizarproductos = async(req, res) => {
         let inventario = req.body.inventarioact;
         let estado = req.body.Estadopdtoact;
         let medida = req.body.medidapdtoact;
-        let tipoempaque = req.body.tempaquepdtoact;
+        let promocion = req.body.promocionact;
+        let porcentaje = req.body.porcentaje;
 
         let sql = `update productos set Nombre='${nombre}',
         Descripcion='${Descripcion}',
@@ -113,7 +115,9 @@ controlador.Actualizarproductos = async(req, res) => {
         hora_fin='${horaend}',
         inventario='${inventario}',
         medidas='${medida}',
-        tipoempaque='${tipoempaque}'
+        promocion='${promocion}',
+        porcentaje='${porcentaje}',
+
         where Codigo_pdto='${id}'`;
 
         await query(sql);

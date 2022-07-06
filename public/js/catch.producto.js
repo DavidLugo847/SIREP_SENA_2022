@@ -16,6 +16,14 @@ function MostrarRegistroproductos() {
 function MostrarProductoseleccionado() {
     modalproductosactualizar.show();
 }
+/*Validacion del campo de descuento*/
+let campoDescuento = document.getElementById('descCont').value;
+if (campoDescuento == 'Activo') {
+
+
+}
+
+
 /* =================================================== */
 function RegistrarProducto() {
     let form = document.getElementById('form_registro_productos');
@@ -31,7 +39,8 @@ function RegistrarProducto() {
     let inventario = document.getElementById('controlinventario').value;
     let estadopdto = document.getElementById('estadoproducto').value;
     let medida = document.getElementById('medida').value;
-    let tipoempaque = document.getElementById('tipoempaque').value;
+    let promocion = document.getElementById('promocion').value;
+    let porcentaje = document.getElementById('porcentaje').value;
 
     var DatosFormData = new FormData();
     DatosFormData.append('Nombrepdto', nombrepdto);
@@ -45,16 +54,18 @@ function RegistrarProducto() {
     DatosFormData.append('horafin', horafin);
     DatosFormData.append('inventario', inventario);
     DatosFormData.append('Estadopdto', estadopdto);
-    DatosFormData.append('medidaprod', medida);
-    DatosFormData.append('tempaque', tipoempaque);
+    DatosFormData.append('medida', medida);
+    DatosFormData.append('promocion', promocion);
+    DatosFormData.append('porcentaje', porcentaje);
+
 
     fetch('/Registrar_pdto', {
-            method: 'post',
-            body: DatosFormData,
-            headers: {
-                'Authorization': 'Bearer ' + token,
-            }
-        }).then(res => res.json())
+        method: 'post',
+        body: DatosFormData,
+        headers: {
+            'Authorization': 'Bearer ' + token,
+        }
+    }).then(res => res.json())
         .then(data => {
             if (data.status == 401) return console.log(data)
             Swal.fire({
@@ -71,11 +82,11 @@ function RegistrarProducto() {
 
 function ListaProductos() {
     fetch('/Lista_pdto', {
-            method: 'get',
-            headers: {
-                'Authorization': 'Bearer ' + token,
-            }
-        })
+        method: 'get',
+        headers: {
+            'Authorization': 'Bearer ' + token,
+        }
+    })
         .then(res => res.json())
         .then(data => {
             if (data.status == 401) return console.log('No autorizado');
@@ -88,12 +99,12 @@ function Buscarproductos(ident) {
     var datos = new URLSearchParams();
     datos.append('Identificacion', ident);
     fetch('/Buscar_pdto', {
-            method: 'post',
-            body: datos,
-            headers: {
-                'Authorization': 'Bearer ' + token,
-            }
-        }).then(res => res.json())
+        method: 'post',
+        body: datos,
+        headers: {
+            'Authorization': 'Bearer ' + token,
+        }
+    }).then(res => res.json())
         .then(data => {
             if (data.status == 401) return console.log(data)
             data.forEach(pdto => {
@@ -108,8 +119,10 @@ function Buscarproductos(ident) {
                 document.getElementById('horafinact').value = pdto.hora_fin;
                 document.getElementById('controlinventarioact').value = pdto.inventario;
                 document.getElementById('estadoproductoact').value = pdto.Estado;
-                document.getElementById('medidaact').value = pdto.medidaProd;
-                document.getElementById('tipoempaqueact').value = pdto.tipoEmpaque;
+                document.getElementById('medidaact').value = pdto.medida;
+                document.getElementById('promocionact').value = pdto.promocion;
+                document.getElementById('procentajeact').value = pdto.porcentaje;
+
 
             });
         });
@@ -129,7 +142,9 @@ function Actaulizarpdto() {
     let inventario = document.getElementById('controlinventarioact').value;
     let estadopdto = document.getElementById('estadoproductoact').value;
     let medidapdto = document.getElementById('medidaact').value;
-    let tempaquepdto = document.getElementById('tipoempaqueact').value;
+    let promocionpdto = document.getElementById('promocionact').value;
+    let porcentajepdto = document.getElementById('porcentajeact').value;
+
 
 
     var DatosFormData = new FormData();
@@ -146,14 +161,16 @@ function Actaulizarpdto() {
     DatosFormData.append('inventarioact', inventario);
     DatosFormData.append('Estadopdtoact', estadopdto);
     DatosFormData.append('medidapdtoact', medidapdto);
-    DatosFormData.append('tempaquepdtoact', tempaquepdto);
+    DatosFormData.append('promocionact', promocionpdto);
+    DatosFormData.append('porcentajeact', porcentajepdto);
+
     fetch('/Actual_pdto', {
-            method: 'post',
-            body: DatosFormData,
-            headers: {
-                'Authorization': 'Bearer ' + token,
-            }
-        }).then(res => res.json())
+        method: 'post',
+        body: DatosFormData,
+        headers: {
+            'Authorization': 'Bearer ' + token,
+        }
+    }).then(res => res.json())
         .then(data => {
             if (data.status == 401) return console.log(data)
             Swal.fire({
@@ -175,12 +192,12 @@ function Buscarpstoprecio(codgiopdto) {
     var datos = new URLSearchParams();
     datos.append('Codigopdto', codgiopdto);
     fetch('/buscar_sale', {
-            method: 'post',
-            body: datos,
-            headers: {
-                'Authorization': 'Bearer ' + token,
-            }
-        }).then(res => res.json())
+        method: 'post',
+        body: datos,
+        headers: {
+            'Authorization': 'Bearer ' + token,
+        }
+    }).then(res => res.json())
         .then(data => {
             if (data.status == 401) return console.log(data)
             data.forEach(pdtosale => {
@@ -197,12 +214,12 @@ function Listarprecios(pdtoid) {
     let datosbussale = new URLSearchParams;
     datosbussale.append("idpdto", pdtoid)
     fetch('/Listar_precios', {
-            method: 'post',
-            body: datosbussale,
-            headers: {
-                'Authorization': 'Bearer ' + token,
-            }
-        }).then(res => res.json())
+        method: 'post',
+        body: datosbussale,
+        headers: {
+            'Authorization': 'Bearer ' + token,
+        }
+    }).then(res => res.json())
         .then(data => {
             if (data.status == 401) console.log(data);
             let json = [];
@@ -243,12 +260,12 @@ function RegistrarPrecio() {
     DatosFormData.append('precio', precio);
     DatosFormData.append('cargo', encargadp);
     fetch('/Registrar_precio', {
-            method: 'post',
-            body: DatosFormData,
-            headers: {
-                'Authorization': 'Bearer ' + token,
-            }
-        }).then(res => res.json())
+        method: 'post',
+        body: DatosFormData,
+        headers: {
+            'Authorization': 'Bearer ' + token,
+        }
+    }).then(res => res.json())
         .then(data => {
             if (data.status == 401) return console.log(data)
             Listarprecios(id);
@@ -266,12 +283,12 @@ function ObtenerPrecio(idprecio) {
     let datosale = new URLSearchParams;
     datosale.append("idsale", idprecio);
     fetch('/Mostrar_sale', {
-            method: 'post',
-            body: datosale,
-            headers: {
-                'Authorization': 'Bearer ' + token,
-            }
-        }).then(res => res.json())
+        method: 'post',
+        body: datosale,
+        headers: {
+            'Authorization': 'Bearer ' + token,
+        }
+    }).then(res => res.json())
         .then(data => {
             if (data.status == 401) return console.log(data)
             data.forEach(pdtosale => {
@@ -299,25 +316,23 @@ function ActualizarPrecio() {
                 'Authorization': 'Bearer ' + token,
             }
         }).then(res => res.json())
-        .then(data => {
-            if (data.status == 401) return console.log(data)
-            Listarprecios(idpdtosale);
-            Swal.fire({
-                title: data.titulo,
-                icon: data.icono,
-                text: data.mensaje,
-                timer: data.timer
+            .then(data => {
+                if (data.status == 401) return console.log(data)
+                Listarprecios(idpdtosale);
+                Swal.fire({
+                    title: data.titulo,
+                    icon: data.icono,
+                    text: data.mensaje,
+                    timer: data.timer
+                });
             });
-        });
 }
 
 function renderTableProductos(datos) {
     let lista = [];
     datos.forEach(element => {
         let medida = 'N/A';
-        let tempaque = 'N/A';
-        if(element.medidas) medida = element.medidas;
-        if(element.tipoempaque) tempaque = element.tipoempaque;
+        if (element.medidas) medida = element.medidas;
         let array = {
             "id_pdto": element.Codigo_pdto,
             "Nombres": element.Nombre_pdto,
@@ -330,7 +345,6 @@ function renderTableProductos(datos) {
             "Tipo": element.tipo,
             "Inventario": element.inventario,
             "Horainicio": element.hora_inicio,
-            "Empaque": tempaque,
             "Horafin": element.hora_fin,
             "Medida": medida,
             "btn": `<a class="btn-edit" onclick="Buscarproductos(` + element.Codigo_pdto + `);">Editar</a><a class="btn-sale" onclick="Buscarpstoprecio(` + element.Codigo_pdto + `);">Precio</a>`,
@@ -355,7 +369,6 @@ function renderTableProductos(datos) {
             { "data": "Tipo" },
             { "data": "Inventario" },
             { "data": "Medida" },
-            { "data": "Empaque" },
             { "data": "Horainicio" },
             { "data": "Horafin" },
             { "data": "btn" }

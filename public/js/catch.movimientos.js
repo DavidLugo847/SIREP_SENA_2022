@@ -128,6 +128,8 @@ var productoAgregado = new bootstrap.Modal(
     document.getElementById("modalProductoAgregado"), { keyboard: false }
 );
 
+
+
 function agregar(cod_producto) {
     var datos = new URLSearchParams();
     datos.append("codigop", cod_producto);
@@ -256,6 +258,7 @@ function agregar(cod_producto) {
                 function sumar() {
                     let cantVlr = tusuarioDOM;
                     let cantProd = document.getElementById("inputCant").value;
+                    let porcentaje = document.getElementById('porcentaje').value;
                     if (!cantProd) cantProd = 0;
 
                     var total = parseFloat(cantVlr) * parseFloat(cantProd);

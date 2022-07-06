@@ -42,7 +42,7 @@ function Render_Productos(data) {
     data.forEach(lista => {
         let medidaP = '';
         let tipoEmpaque = 'N/A';
-        if(lista.medida) medidaP = ' X '+lista.medida;
+        if(lista.medidas) medidaP = ' X '+lista.medida;
         if(lista.tipoempaque) tipoEmpaque = lista.tipoempaque;
         card_product +=
             `<div class='card text-black bg-white mb-3 m-2'>

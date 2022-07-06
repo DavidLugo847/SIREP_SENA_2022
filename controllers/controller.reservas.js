@@ -5,7 +5,7 @@ const controlador = {};
 controlador.Listar_Todos_Productos = async(req, res) => {
     var sesion_Cargo = req.session.user.id_cargo;
     //He agregado los campos 'medida', 'tipoempaque' para mostrar
-    let sql = 'select id_inventario,Producto as producto,descripcion,tipo,imagen,reserva,stock,MaxReserva, hora_inicio, hora_fin, nomb_up as up, medida, tipoempaque, ';
+    let sql = 'select id_inventario,Producto as producto,descripcion,tipo,imagen,reserva,stock,MaxReserva, hora_inicio, hora_fin, nomb_up as up, medidas,';
     if (sesion_Cargo == 1) {
         sql += `aprendiz as precio,Nombre as pv    from lista_productos order by Producto   `;
     }
